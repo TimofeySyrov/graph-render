@@ -1,0 +1,20 @@
+.graphList-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.graphList-title {
+  text-align: center;
+}
+
+.graphList {
+  appearance: none;
+  min-width: 280px;
+  width: fit-content;
+  padding: 10px;
+  border-color: '#80808088';
+  background: url('http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png')
+    #fff no-repeat calc(100% - 10px);
+}

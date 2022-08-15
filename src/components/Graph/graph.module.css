@@ -1,0 +1,61 @@
+.graph-title {
+  font-size: 24px;
+  text-align: center;
+}
+
+.graph-desc {
+  text-align: center;
+  padding: 10px;
+}
+
+.graph {
+  border: 1px solid #80808088;
+  background-color: #fff;
+  box-shadow: 0 3px 10px #00000023;
+}
+
+.graph__rect {
+  fill: #fff;
+  stroke-width: 1;
+}
+
+.graph__rect-name {
+  text-anchor: middle;
+  alignment-baseline: middle;
+}
+
+.graph__rect,
+.graph__rect-name {
+  cursor: -webkit-grab; /* Chrome 1-21, Safari 4+ */
+  cursor: -moz-grab; /* Firefox 1.5-26 */
+  cursor: grab; /* W3C standards syntax, should come least */
+}
+
+.graph__rect-name,
+.graph__rect-line {
+  filter: brightness(85%);
+}
+
+.tooltip-wrapper {
+  position: relative;
+}
+
+.tooltip {
+  position: relative;
+  display: none;
+}
+
+.tooltip__background {
+  filter: brightness(50%);
+}
+
+.tooltip__text {
+  fill: #fff;
+  font-weight: 500;
+  text-anchor: middle;
+  alignment-baseline: middle;
+}
+
+.tooltip-wrapper:hover .tooltip {
+  display: block;
+}
