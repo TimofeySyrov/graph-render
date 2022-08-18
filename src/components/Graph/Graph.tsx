@@ -8,6 +8,7 @@ import styles from './graph.module.css';
 
 type GraphProps = {
   id: number;
+  data: GraphInterface;
 };
 
 class Graph extends Component<GraphProps> {
@@ -36,7 +37,7 @@ class Graph extends Component<GraphProps> {
 
     this.state = {
       id: props.id,
-      data: null,
+      data: props.data,
       fullGraphInfo: null,
       svgGraph: null,
       svgGridCoords: { x: 0, y: 0 },
@@ -66,8 +67,6 @@ class Graph extends Component<GraphProps> {
   }
 
   async componentDidMount() {
-    await this.fetchGraphInfo();
-
     this.getFullGraphInfo();
     this.createGraph();
     this.updateGridPosition();
@@ -386,6 +385,7 @@ class Graph extends Component<GraphProps> {
       <g
         key={node.id}
         data-node-id={node.id.toString()}
+        data-col={nodeInfo?.grid?.[0]}
         className={styles['tooltip-wrapper']}
         transform={`translate(${nodeInfo?.coords?.x}, ${nodeInfo?.coords?.y})`}
       >
@@ -403,6 +403,7 @@ class Graph extends Component<GraphProps> {
           y={this.graphSizes.nodeHeight / 2}
           fill={nodeInfo?.color}
           onMouseDown={(e) => this.handleSvgNodeMouseDown(e)}
+          data-testid={node.name}
         >
           {node.id} - {node.name}
         </text>
@@ -543,8 +544,8 @@ class Graph extends Component<GraphProps> {
         </div>
         <div className={styles['graph-desc']}>
           <span>
-            ViewBox: x{this.svgGraphRef.current?.viewBox.animVal.x} y
-            {this.svgGraphRef.current?.viewBox.animVal.y}
+            ViewBox: x{this.svgGraphRef.current?.viewBox?.animVal.x} y
+            {this.svgGraphRef.current?.viewBox?.animVal.y}
           </span>
           {` - `}
           <span>
