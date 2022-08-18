@@ -1,5 +1,6 @@
 import React, { Component, createRef } from 'react';
 
+import GraphInterface from '../../utils/interfaces/graph';
 import Graph from '../Graph/Graph';
 
 import styles from './graphList.module.css';
@@ -7,7 +8,11 @@ import styles from './graphList.module.css';
 type GraphsListProps = {};
 
 class GraphsList extends Component<GraphsListProps> {
-  state: { graphs: number[]; activeGraphId: number | null };
+  state: {
+    graphs: number[];
+    activeGraphId: number | null;
+    graphData: GraphInterface | null;
+  };
   graphsDropdownRef: React.RefObject<HTMLSelectElement>;
 
   constructor(props: GraphsListProps) {
@@ -15,14 +20,24 @@ class GraphsList extends Component<GraphsListProps> {
     this.state = {
       graphs: [],
       activeGraphId: null,
+      graphData: null,
     };
     this.graphsDropdownRef = createRef();
   }
 
-  handleGraphsDropdownChange(event: React.FormEvent<HTMLSelectElement>) {
-    this.setState({
-      activeGraphId: event.currentTarget.value,
-    });
+  async fetchActiveGraphData(id: string) {
+    await fetch(`/api/graphs/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({
+          activeGraphId: id,
+          graphData: data,
+        });
+      });
+  }
+
+  async handleGraphsDropdownChange(event: React.FormEvent<HTMLSelectElement>) {
+    await this.fetchActiveGraphData(event.currentTarget.value);
   }
 
   async componentDidMount() {
@@ -33,6 +48,10 @@ class GraphsList extends Component<GraphsListProps> {
       });
 
     this.setState({ activeGraphId: this.graphsDropdownRef.current?.value });
+
+    if (this.state.activeGraphId) {
+      await this.fetchActiveGraphData(this.state.activeGraphId.toString());
+    }
   }
 
   render() {
@@ -55,8 +74,12 @@ class GraphsList extends Component<GraphsListProps> {
             </option>
           ))}
         </select>
-        {this.state.activeGraphId && (
-          <Graph key={this.state.activeGraphId} id={this.state.activeGraphId} />
+        {this.state.activeGraphId && this.state.graphData && (
+          <Graph
+            key={this.state.activeGraphId}
+            id={this.state.activeGraphId}
+            data={this.state.graphData}
+          />
         )}
       </div>
     );

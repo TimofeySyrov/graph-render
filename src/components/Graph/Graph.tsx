@@ -8,6 +8,7 @@ import styles from './graph.module.css';
 
 type GraphProps = {
   id: number;
+  data: GraphInterface;
 };
 
 class Graph extends Component<GraphProps> {
@@ -36,7 +37,7 @@ class Graph extends Component<GraphProps> {
 
     this.state = {
       id: props.id,
-      data: null,
+      data: props.data,
       fullGraphInfo: null,
       svgGraph: null,
       svgGridCoords: { x: 0, y: 0 },
@@ -55,20 +56,8 @@ class Graph extends Component<GraphProps> {
     this.svgGridRef = createRef();
   }
 
-  async fetchGraphInfo() {
-    try {
-      const response = await fetch(`/api/graphs/${this.props.id}`);
-      const json = await response.json();
-      this.setState({ data: json });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   async componentDidMount() {
-    await this.fetchGraphInfo();
-
-    this.getFullGraphInfo();
+    await this.getFullGraphInfo();
     this.createGraph();
     this.updateGridPosition();
   }
@@ -325,9 +314,7 @@ class Graph extends Component<GraphProps> {
         fromEdgeLines?.forEach((line) => {
           line?.setAttribute(
             'x1',
-            `${
-              this.state.draggableNodeCoords.x + this.graphSizes.nodeWidth / 2
-            }`
+            `${this.state.draggableNodeCoords.x + this.graphSizes.nodeWidth}`
           );
           line?.setAttribute(
             'y1',
@@ -340,12 +327,7 @@ class Graph extends Component<GraphProps> {
 
       if (hasToEdgeLines) {
         toEdgeLines?.forEach((line) => {
-          line?.setAttribute(
-            'x2',
-            `${
-              this.state.draggableNodeCoords.x + this.graphSizes.nodeWidth / 2
-            }`
-          );
+          line?.setAttribute('x2', `${this.state.draggableNodeCoords.x}`);
           line?.setAttribute(
             'y2',
             `${
@@ -386,6 +368,7 @@ class Graph extends Component<GraphProps> {
       <g
         key={node.id}
         data-node-id={node.id.toString()}
+        data-col={nodeInfo?.grid?.[0]}
         className={styles['tooltip-wrapper']}
         transform={`translate(${nodeInfo?.coords?.x}, ${nodeInfo?.coords?.y})`}
       >
@@ -403,6 +386,7 @@ class Graph extends Component<GraphProps> {
           y={this.graphSizes.nodeHeight / 2}
           fill={nodeInfo?.color}
           onMouseDown={(e) => this.handleSvgNodeMouseDown(e)}
+          data-testid={node.name}
         >
           {node.id} - {node.name}
         </text>
@@ -512,7 +496,7 @@ class Graph extends Component<GraphProps> {
     const graph = this.svgGraphRef.current;
     const content = this.svgGraphContentRef.current;
     const grid = this.svgGridRef.current;
-    const svgIsCreated = graph && content && grid;
+    const svgIsCreated = graph !== null && content !== null && grid !== null;
 
     // Set svgContent by middle + set svgGrid sizes by svgContent
     if (svgIsCreated) {
@@ -543,8 +527,8 @@ class Graph extends Component<GraphProps> {
         </div>
         <div className={styles['graph-desc']}>
           <span>
-            ViewBox: x{this.svgGraphRef.current?.viewBox.animVal.x} y
-            {this.svgGraphRef.current?.viewBox.animVal.y}
+            ViewBox: x{this.svgGraphRef.current?.viewBox?.animVal.x} y
+            {this.svgGraphRef.current?.viewBox?.animVal.y}
           </span>
           {` - `}
           <span>
