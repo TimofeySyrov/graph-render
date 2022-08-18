@@ -56,18 +56,12 @@ class Graph extends Component<GraphProps> {
     this.svgGridRef = createRef();
   }
 
-  async fetchGraphInfo() {
-    try {
-      const response = await fetch(`/api/graphs/${this.props.id}`);
-      const json = await response.json();
-      this.setState({ data: json });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   async componentDidMount() {
+<<<<<<< HEAD
     this.getFullGraphInfo();
+=======
+    await this.getFullGraphInfo();
+>>>>>>> fd56d6e (fix app tests)
     this.createGraph();
     this.updateGridPosition();
   }
@@ -324,9 +318,7 @@ class Graph extends Component<GraphProps> {
         fromEdgeLines?.forEach((line) => {
           line?.setAttribute(
             'x1',
-            `${
-              this.state.draggableNodeCoords.x + this.graphSizes.nodeWidth / 2
-            }`
+            `${this.state.draggableNodeCoords.x + this.graphSizes.nodeWidth}`
           );
           line?.setAttribute(
             'y1',
@@ -339,12 +331,7 @@ class Graph extends Component<GraphProps> {
 
       if (hasToEdgeLines) {
         toEdgeLines?.forEach((line) => {
-          line?.setAttribute(
-            'x2',
-            `${
-              this.state.draggableNodeCoords.x + this.graphSizes.nodeWidth / 2
-            }`
-          );
+          line?.setAttribute('x2', `${this.state.draggableNodeCoords.x}`);
           line?.setAttribute(
             'y2',
             `${
@@ -513,7 +500,7 @@ class Graph extends Component<GraphProps> {
     const graph = this.svgGraphRef.current;
     const content = this.svgGraphContentRef.current;
     const grid = this.svgGridRef.current;
-    const svgIsCreated = graph && content && grid;
+    const svgIsCreated = graph !== null && content !== null && grid !== null;
 
     // Set svgContent by middle + set svgGrid sizes by svgContent
     if (svgIsCreated) {
