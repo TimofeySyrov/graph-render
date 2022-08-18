@@ -25,18 +25,6 @@ class GraphsList extends Component<GraphsListProps> {
     this.graphsDropdownRef = createRef();
   }
 
-<<<<<<< HEAD
-  async handleGraphsDropdownChange(event: React.FormEvent<HTMLSelectElement>) {
-    this.setState({
-      activeGraphId: event.currentTarget.value,
-    });
-
-    await fetch('/api/graphs/' + event.currentTarget.value)
-      .then((res) => res.json())
-      .then((data) => {
-        this.setState({ graphData: data });
-      });
-=======
   async fetchActiveGraphData(id: string) {
     await fetch(`/api/graphs/${id}`)
       .then((res) => res.json())
@@ -50,7 +38,6 @@ class GraphsList extends Component<GraphsListProps> {
 
   async handleGraphsDropdownChange(event: React.FormEvent<HTMLSelectElement>) {
     await this.fetchActiveGraphData(event.currentTarget.value);
->>>>>>> fd56d6e (fix app tests)
   }
 
   async componentDidMount() {
@@ -63,15 +50,7 @@ class GraphsList extends Component<GraphsListProps> {
     this.setState({ activeGraphId: this.graphsDropdownRef.current?.value });
 
     if (this.state.activeGraphId) {
-<<<<<<< HEAD
-      await fetch(`/api/graphs/${this.state.activeGraphId}`)
-        .then((res) => res.json())
-        .then((data) => {
-          this.setState({ graphData: data });
-        });
-=======
       await this.fetchActiveGraphData(this.state.activeGraphId.toString());
->>>>>>> fd56d6e (fix app tests)
     }
   }
 

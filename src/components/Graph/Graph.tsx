@@ -57,11 +57,7 @@ class Graph extends Component<GraphProps> {
   }
 
   async componentDidMount() {
-<<<<<<< HEAD
-    this.getFullGraphInfo();
-=======
     await this.getFullGraphInfo();
->>>>>>> fd56d6e (fix app tests)
     this.createGraph();
     this.updateGridPosition();
   }
