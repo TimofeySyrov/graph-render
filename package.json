@@ -3,10 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "start": "vite",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "jest"
+    "test": "jest",
+    "client": "vite",
+    "server": "cd server && npm run start"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -23,6 +25,7 @@
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.17",
     "@vitejs/plugin-react": "^1.0.7",
+    "concurrently": "^7.3.0",
     "jest": "^27.5.1",
     "jest-css-modules": "^2.1.0",
     "msw": "^0.39.2",
