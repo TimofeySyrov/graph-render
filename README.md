@@ -2,12 +2,12 @@
 
 ## Getting started
 
-1.  Run `npm install` // Installing node_modules for CLIENT
-2.  Run `cd server` -> `npm install` -> `cd ..` // Installing node_modules for SERVER`
-3.  Run `npm start` to run the CLIENT and SERVER
-4.  Run `npm test` to see the CLIENT tests
-5.  Run `npm client` to run the CLIENT only
-6.  Run `npm client` to run the Express SERVER only
+1.  Run `npm install` // Installing node_modules for <em>CLIENT</em>
+2.  Run `cd server` -> `npm install` -> `cd ..` // Installing node_modules for <em>SERVER</em>
+3.  Run `npm start` to run the SERVER and then <em>CLIENT</em>
+4.  Run `npm test` to see the <em>CLIENT</em> tests
+5.  Run `npm client` to run the <em>CLIENT</em> only
+6.  Run `npm server` to run the Express <em>SERVER</em> only
 
 Your task will be to write a React based application, either in TypeScript or JavaScript (altough the former will be preferred). The application should:
 
