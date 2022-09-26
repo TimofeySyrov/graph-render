@@ -1,5 +1,7 @@
 # DF Designer Frontend Vacancy - Coding Challenge
 
+**Demo:** https://timofeysyrov.github.io/graph-render/
+
 ## Getting started
 
 1.  Run `npm install` // Installing node_modules for <em>CLIENT</em>
